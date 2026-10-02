@@ -1,157 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ceb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Official IQ Test</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap">
+<title>IQ Test</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;800&display=swap">
 <style>
-:root{--blue:#1d3bff;--pink:#ff3d81;--yellow:#ffe14d;--green:#18c964;--white:#fff;--ink:#101030;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#e8edf5;--ink:#14213d;--blue:#2a6fdb;--card:#fff;--soft:#c9d4e8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;min-height:100vh;background:var(--blue);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;font-weight:600;display:grid;place-items:center;padding:16px}
-.card{background:var(--white);width:min(560px,100%);border:4px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 var(--ink);padding:28px;min-height:380px;display:flex;flex-direction:column;gap:16px}
-h1{font-family:'Bowlby One',Impact,sans-serif;font-weight:400;font-size:clamp(26px,6.5vw,40px);line-height:1.08;margin:0}
-p{margin:0;font-size:18px;line-height:1.4}
-input{font:inherit;font-size:20px;padding:12px 14px;border:3px solid var(--ink);border-radius:12px;width:100%}
-button{font:inherit;font-weight:800;font-size:18px;padding:14px 18px;border:3px solid var(--ink);border-radius:12px;background:var(--yellow);color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
-button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;font-weight:500;display:grid;place-items:center;padding:16px}
+.card{background:var(--card);width:min(600px,100%);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px;box-shadow:0 2px 0 var(--soft)}
+h1{font-weight:800;font-size:clamp(22px,5vw,30px);line-height:1.2;margin:0}
+p,li{font-size:17px;line-height:1.5;margin:0}
+ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.top{display:flex;justify-content:space-between;font-size:15px;font-weight:800}
+.bar{height:8px;background:var(--soft);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue);transition:width .3s}
+button,input{font:inherit;color:var(--ink)}
+button{font-weight:800;font-size:17px;padding:14px 16px;border:2px solid var(--ink);border-radius:10px;background:var(--card);cursor:pointer;text-align:left}
+button:hover{background:var(--bg)}
+button.go{background:var(--ink);color:#fff;text-align:center}
+button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+input{font-size:20px;padding:12px 14px;border:2px solid var(--ink);border-radius:10px;width:100%}
 .opts{display:grid;gap:10px}
-.opts button{text-align:left;background:var(--white)}
-.opts button.bad{background:var(--pink);color:var(--white)}
-.bar{height:14px;border:3px solid var(--ink);border-radius:99px;overflow:hidden;flex:none}
-.bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
-.msg{min-height:26px;font-weight:800;color:var(--pink)}
-.row{display:flex;gap:12px;align-items:center;min-height:70px;flex-wrap:wrap}
-#yes.run{position:fixed;z-index:9}
-.big{font-family:'Bowlby One',Impact,sans-serif;font-size:clamp(64px,22vw,120px);line-height:1;color:var(--pink);-webkit-text-stroke:3px var(--ink)}
-.cert{border:4px dashed var(--ink);border-radius:14px;padding:16px;text-align:center}
-.box{height:140px;font-size:24px;background:var(--pink);color:var(--white)}
-.box.go{background:var(--green)}
-.pads{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pad{height:90px;opacity:.45}
-.pad.lit{opacity:1;transform:scale(.94)}
-ul{margin:0;padding-left:20px;line-height:1.6;font-size:16px}
+.mx{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(270px,100%);margin:0 auto}
+.c{border:2px solid var(--ink);border-radius:8px;aspect-ratio:1;display:grid;place-items:center;font-weight:800;font-size:28px}
+.c svg,.mb svg{width:100%;height:100%}
+.mo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(330px,100%);margin:0 auto}
+.mb{padding:6px;text-align:center}
+.digits{font-weight:800;font-size:clamp(36px,10vw,56px);letter-spacing:.2em;text-align:center;padding:20px 0}
+.big{font-weight:800;font-size:clamp(80px,26vw,140px);line-height:1;color:var(--blue)}
+.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--soft);padding:8px 0;font-size:16px}
+.note{font-size:14px;opacity:.75;line-height:1.5}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <main class="card" id="app"></main>
 <script>
-const app=document.getElementById('app');
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let name='',pts=0,i=0,tries=0,log=[],timers=[],qTimes=[],rms=null;
-const later=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t);return t};
-const clear=()=>{timers.forEach(clearTimeout);timers=[]};
-const record=(l,ok)=>{if(ok)pts++;log.push([l,ok])};
-const next=()=>{clear();i++;stages[i]()};
-const shell=h=>{app.innerHTML=`<div class="bar"><i style="width:${i/(stages.length-1)*100}%"></i></div>${h}<div class="msg" id="m"></div>`};
-const $=id=>document.getElementById(id);
+const $=id=>document.getElementById(id),app=$('app'),esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let items=[],idx=0,res=[],timer=null,t0=0,name='';
 
-const qs=[
- {q:'What is 2 + 2 × 2?',o:['8','6','Both feel wrong'],a:1,w:'Multiplication goes first. Ask a calculator for help.'},
- {q:'How many months have 28 days?',o:['1','12','Only February'],a:1,w:'Every month has at least 28 days.'},
- {q:'What do you put in a toaster?',o:['Bread','A phone','Soup'],a:0,w:'It was bread. It is always bread.'},
- {q:'A rooster lays an egg on a roof. Which way does it roll?',o:['Left','Right','Roosters do not lay eggs'],a:2,w:'Roosters. Do not. Lay eggs.'},
- {q:'Which is heavier: 1 kg of feathers or 1 kg of steel?',o:['Steel','Feathers','They weigh the same'],a:2,w:'It says 1 kg both times. Read again.'},
- {q:'A doctor gives you 3 pills: take one every 30 minutes. How long do they last?',o:['1 hour','1.5 hours','3 hours'],a:0,w:'You take one now, one at 30 min, one at 60 min.'},
- {q:'How many letters are in the word "banana"?',o:['5','6','7'],a:1,w:'B-A-N-A-N-A. Count on your fingers if you must.'},
- {q:'Which one is NOT a real day of the week?',o:['Tuesday','Thursday','Fryday'],a:2,w:'Fryday is not a day. It is a bad pun.'}
-];
+const F=['#ffffff','#9db4ff','#1b2a6b'];
+const shape=(s,x,r,f)=>{const st=`fill="${f}" stroke="#14213d" stroke-width="2.5"`;
+ return s===0?`<circle cx="${x}" cy="30" r="${r}" ${st}/>`:s===1?`<rect x="${x-r}" y="${30-r}" width="${2*r}" height="${2*r}" ${st}/>`:`<polygon points="${x},${30-r} ${x+r},${30+r} ${x-r},${30+r}" ${st}/>`};
+const cell=a=>{const n=a.n,r=n===1?17:n===2?11:8,xs=n===1?[30]:n===2?[19,41]:[12,30,48];
+ return `<svg viewBox="0 0 60 60" aria-hidden="true">${xs.map(x=>shape(a.s,x,r,F[a.f])).join('')}</svg>`};
+function matrix(rule,d,cnt){
+ const g=[];for(let r=0;r<3;r++)for(let c=0;c<3;c++)g.push(rule(r,c));
+ const ans=g[8],key=a=>a.s+'.'+a.f+'.'+a.n,cand=[];
+ for(const ds of[0,1,2])for(const df of[0,1,2])for(const dn of(cnt?[0,1,2]:[0]))
+  if(ds||df||dn)cand.push({k:(ds>0)+(df>0)+(dn>0),a:{s:(ans.s+ds)%3,f:(ans.f+df)%3,n:cnt?(ans.n-1+dn)%3+1:ans.n}});
+ cand.sort((x,y)=>x.k-y.k||Math.random()-.5);
+ const seen=new Set([key(ans)]),opts=[{o:ans,c:1}];
+ for(const c of cand){if(opts.length>=6)break;if(!seen.has(key(c.a))){seen.add(key(c.a));opts.push({o:c.a,c:0})}}
+ return{cat:'Pattern',d,mg:g.slice(0,8),opts};
+}
+const T=(cat,d,q,o,a)=>({cat,d,q,opts:o.map((t,k)=>({o:t,c:k===a?1:0}))});
+const M=(d,n,rev)=>({cat:'Memory',d,mem:1,n,rev,q:rev?'Hinumdomi ang mga numero. I-type kini balikbaliskad.':'Hinumdomi ang mga numero. I-type kini sumala sa han-ay.'});
+function build(){
+ items=[
+  T('Numbers',1,'Unsa ang sunod nga numero: 2, 4, 8, 16, ?',['32','24','30','28','34'],0),
+  T('Numbers',2,'Unsa ang sunod nga numero: 3, 6, 11, 18, 27, ?',['36','38','40','35','39'],1),
+  T('Numbers',2,'Unsa ang sunod nga numero: 5, 10, 8, 16, 14, 28, ?',['56','42','26','30','24'],2),
+  T('Numbers',3,'Unsa ang sunod nga numero: 1, 2, 4, 7, 12, 20, ?',['30','31','32','33','28'],3),
+  T('Numbers',3,'Unsa ang sunod nga numero: 2, 12, 36, 80, 150, ?',['252','240','210','225','264'],0),
+  T('Verbal',1,'Ang init supak sa bugnaw. Ang taas supak sa...',['Ubos','Dako','Ibabaw','Yuta'],0),
+  T('Verbal',1,'Ang langgam adunay salag. Ang putyokan adunay...',['Balay sa putyokan','Dugos','Bulak','Tusok'],0),
+  T('Verbal',2,'Ang doktor ug pasyente, sama sa magtutudlo ug...',['Estudyante','Eskwelahan','Leksyon','Libro'],0),
+  T('Verbal',2,'Ang libro adunay kapitulo. Ang kanta adunay...',['Berso (verse)','Mag-aawit','Radyo','Album'],0),
+  T('Verbal',2,'Hain ang DILI KAUBAN?',['Triangulo','Kwadrado','Pentagon','Lingin','Hexagon'],3),
+  T('Verbal',2,'Ang dagom gamiton sa pagtahi. Ang pala gamiton sa...',['Pagkalot','Pagputol','Pagsulat','Pagluto'],0),
+  T('Logic',1,'Ang tanang rosas kay bulak. Ang tanang bulak nagkinahanglan og tubig. Unsa ang kinahanglan tinuod?',['Ang rosas nagkinahanglan og tubig','Ang tanang tanom kay bulak','Ang rosas lang ang nagkinahanglan og tubig','Ang bulak kay rosas'],0),
+  T('Logic',2,'Mas tag-as si Tom kay Sam. Mas tag-as si Sam kay Lee. Mas mubo si Ana kay Lee. Kinsa ang ikaduha nga pinaka-tag-as?',['Tom','Sam','Lee','Ana'],1),
+  T('Logic',2,'Ang tanang blip kay blop. Walay blop nga blup. Unsa ang kinahanglan tinuod?',['Walay blip nga blup','Naay blip nga blup','Ang tanang blup kay blop','Ang tanang blop kay blip'],0),
+  T('Logic',3,'Pila ka degrees ang anggulo tali sa duha ka kamot sa orasan kung 3:15?',['0°','7.5°','15°','22.5°'],1),
+  T('Logic',3,'Sa lumba, nahuman si A una kay B, apan human kang C. Nahuman si D human kang B. Nahuman si E una kang C. Kinsa ang ika-tulo nga nahuman?',['A','B','C','D','E'],0),
+  matrix((r,c)=>({s:c,f:r,n:1}),1,0),
+  matrix((r,c)=>({s:(r+c)%3,f:r,n:1}),2,0),
+  matrix((r,c)=>({s:(r+c)%3,f:(r+2*c)%3,n:1}),3,0),
+  matrix((r,c)=>({s:(r+c)%3,f:(2*r+c)%3,n:r+1}),3,1),
+  M(1,5,0),M(2,4,1),M(3,7,0)
+ ].map(x=>({x,k:x.d+Math.random()*.99})).sort((a,b)=>a.k-b.k).map(o=>o.x);
+}
 
 function intro(){
- shell(`<h1>Official IQ Test</h1><p>Find out how smart you really are. ${qs.length+4} tests. Results are final and legally binding.</p><input id="n" placeholder="Type your name" maxlength="20" autocomplete="off"><button id="go">Start the test</button>`);
- const go=()=>{const v=$('n').value.trim();if(!v){$('m').textContent='A name is required. Even you have one.';return}name=v;pts=0;tries=0;log=[];qTimes=[];rms=null;next()};
- $('go').onclick=go;$('n').onkeydown=e=>{if(e.key==='Enter')go()};
+ app.innerHTML=`<h1>IQ Test</h1><p>${23} ka pangutana bahin sa numero, pulong, lohika, hulma, ug memorya. Mas taas ang puntos sa lisod nga pangutana.</p><ul><li>Naay oras ang matag pangutana. Dili ka makabalik.</li><li>Walay calculator, walay pangita sa internet, walay tabang.</li><li>Wala kay makita nga tubag hangtod sa katapusan.</li><li>Mga 15 hangtod 20 minutos ni. Pangita una og hilom nga lugar.</li></ul><input id="n" placeholder="Imong ngalan (kung gusto)" maxlength="20" autocomplete="off"><button class="go" id="go">Sugdi ang test</button>`;
+ $('go').onclick=()=>{name=$('n').value.trim();build();idx=0;res=[];show()};
+}
+function frame(h,limit){
+ clearInterval(timer);
+ app.innerHTML=`<div class="top"><span>Pangutana ${idx+1} sa ${items.length}</span><span id="tl"></span></div><div class="bar"><i style="width:${idx/items.length*100}%"></i></div>${h}`;
+ if(limit){const end=Date.now()+limit*1000,tick=()=>{const s=Math.ceil((end-Date.now())/1000);$('tl').textContent=Math.max(s,0)+'s';if(s<=0)record(false)};tick();timer=setInterval(tick,250)}
+}
+function record(ok){clearInterval(timer);const it=items[idx];res.push({cat:it.cat,d:it.d,ok,ms:Date.now()-t0});idx++;show()}
+function show(){
+ if(idx>=items.length)return finish();
+ const it=items[idx];t0=Date.now();
+ if(it.mem)return memory(it);
+ const o=shuf(it.opts);
+ if(it.mg){
+  frame(`<h1>Hain nga hulma ang makakompleto sa pattern?</h1><div class="mx">${it.mg.map(a=>`<div class="c">${cell(a)}</div>`).join('')}<div class="c">?</div></div><div class="mo">${o.map((p,k)=>`<button class="mb" data-c="${p.c}" aria-label="Pili ${k+1}">${cell(p.o)}</button>`).join('')}</div>`,90);
+ }else{
+  frame(`<h1>${it.q}</h1><div class="opts">${o.map(p=>`<button data-c="${p.c}">${p.o}</button>`).join('')}</div>`,60);
+ }
+ app.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>record(b.dataset.c==='1'));
+}
+function memory(it){
+ const s=Array.from({length:it.n},()=>Math.random()*10|0).join(''),want=it.rev?[...s].reverse().join(''):s;
+ frame(`<h1>${it.q}</h1><div class="digits" id="dg">${s}</div><div id="mp"></div>`,0);
+ timer=setTimeout(()=>{
+  $('dg').textContent='?';t0=Date.now();
+  $('mp').innerHTML=`<input id="ans" inputmode="numeric" autocomplete="off" placeholder="I-type ang mga numero"><br><br><button class="go" id="ok" style="width:100%">Ipadala</button>`;
+  const send=()=>record($('ans').value.replace(/\D/g,'')===want);
+  $('ok').onclick=send;$('ans').onkeydown=e=>{if(e.key==='Enter')send()};$('ans').focus();
+  timer=setTimeout(()=>record(false),30000);
+ },it.n*800+1200);
 }
 
-const question=(q,n)=>()=>{
- const t0q=performance.now();
- shell(`<p>Question ${n+1} of ${qs.length}</p><h1>${q.q}</h1><div class="opts">${q.o.map((t,k)=>`<button data-k="${k}">${t}</button>`).join('')}</div>`);
- let done=false;
- app.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
-  if(done)return;done=true;
-  if(+b.dataset.k===q.a){qTimes.push(performance.now()-t0q);record('Question '+(n+1),true);next()}
-  else{b.classList.add('bad');$('m').textContent=q.w;record('Question '+(n+1),false);later(next,1900)}
- });
-};
-
-function reaction(){
- shell(`<h1>Reaction test</h1><p>Click the box when it turns green.</p><button id="box" class="box">Wait...</button>`);
- const box=$('box'),m=$('m');let ready=false,t0=0,done=false;
- later(()=>{ready=true;t0=performance.now();box.classList.add('go');box.textContent='CLICK!'},1500+Math.random()*2500);
- box.onclick=()=>{
-  if(done)return;done=true;clear();
-  if(!ready){m.textContent='Too early. Patience is not your thing.';record('Reaction',false)}
-  else{const ms=Math.round(performance.now()-t0),ok=ms<600;rms=ms;m.textContent=ms+' ms. '+(ok?'Fast enough.':'A sleeping cat is faster.');record('Reaction',ok)}
-  later(next,1800);
- };
+const erf=x=>{const s=Math.sign(x);x=Math.abs(x);const t=1/(1+.3275911*x),p=((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t;return s*(1-p*Math.exp(-x*x))};
+const L={Numbers:'Numero',Verbal:'Pulong',Logic:'Lohika',Pattern:'Hulma',Memory:'Memorya'};
+function finish(){
+ const tw=res.reduce((a,r)=>a+r.d,0),sc=res.reduce((a,r)=>a+(r.ok?r.d:0),0),p=sc/tw;
+ const iq=Math.round(Math.max(55,Math.min(145,100+15*(p-.55)/.2)));
+ const pct=Math.min(99,Math.max(1,Math.round(50*(1+erf((iq-100)/15/Math.SQRT2)))));
+ const band=iq<70?'Ubos':iq<85?'Ubos sa kasagaran':iq<115?'Kasagaran':iq<130?'Labaw sa kasagaran':'Taas';
+ const cats={};res.forEach(r=>{(cats[r.cat]=cats[r.cat]||[0,0])[1]++;if(r.ok)cats[r.cat][0]++});
+ const mins=Math.round(res.reduce((a,r)=>a+r.ms,0)/60000);
+ app.innerHTML=`<h1>${name?esc(name)+', imong':'Imong'} gibanabana nga IQ</h1><div class="big">${iq}</div><p><b>${band}.</b> Mas taas kay sa mga ${pct}% sa mga tawo. Gibanabana nga sakup: ${iq-8} hangtod ${iq+8}.</p><div>${Object.entries(cats).map(([k,v])=>`<div class="row"><span>${L[k]}</span><span>${v[0]} sa ${v[1]} ang husto</span></div>`).join('')}<div class="row"><span>Kinatibuk-ang puntos</span><span>${sc} of ${tw}</span></div><div class="row"><span>Oras nga gigamit</span><span>mga ${mins} minuto</span></div></div><p class="note">Kini usa ra ka dali nga banabana, dili tinuod nga clinical test. Ang tinuod nga IQ test mas daghan ang pangutana, gisusi sa liboan ka tawo, ug psychologist ang nagdumala. Ang kakapoy, ingay, ug kasinatian sa puzzles makausab sa resulta og 10 ka puntos o labaw pa.</p><button class="go" id="again">Balika ang test</button>`;
+ $('again').onclick=intro;
 }
-
-function memory(){
- const cols=['#ff3d81','#ffe14d','#1d3bff','#18c964'];
- const seq=Array.from({length:4},()=>Math.floor(Math.random()*4));
- shell(`<h1>Memory test</h1><p id="p">Watch the colors.</p><div class="pads">${cols.map((c,k)=>`<button class="pad" data-k="${k}" style="background:${c}" aria-label="Pad ${k+1}"></button>`).join('')}</div>`);
- const pads=[...app.querySelectorAll('.pad')],m=$('m'),p=$('p');let input=[],on=false;
- seq.forEach((k,n)=>{later(()=>pads[k].classList.add('lit'),800+n*800);later(()=>pads[k].classList.remove('lit'),1300+n*800)});
- later(()=>{on=true;p.textContent='Now repeat it.'},800+seq.length*800);
- pads.forEach((b,k)=>b.onclick=()=>{
-  if(!on)return;input.push(k);
-  if(k!==seq[input.length-1]){on=false;m.textContent='Wrong. Your memory called in sick.';record('Memory',false);later(next,1800)}
-  else if(input.length===seq.length){on=false;m.textContent='Correct. Suspicious.';record('Memory',true);later(next,1300)}
- });
-}
-
-function dont(){
- shell(`<h1>Self-control test</h1><p>Do not click the button. Not for five seconds. That is the whole test.</p><button id="b">Do NOT click</button>`);
- const m=$('m');let s=5,done=false;m.textContent='Time left: 5';
- const tick=()=>{if(done)return;s--;
-  if(s<=0){done=true;m.textContent='You did nothing. Perfect.';record('Self-control',true);later(next,1500)}
-  else{m.textContent='Time left: '+s;later(tick,1000)}};
- later(tick,1000);
- $('b').onclick=()=>{if(done)return;done=true;clear();m.textContent='You clicked it. It said do not.';record('Self-control',false);later(next,1800)};
-}
-
-function dodge(){
- shell(`<h1>Last question, ${esc(name)}.</h1><p>Are you smart?</p><div class="row"><button id="yes">Yes</button><button id="no">No</button></div>`);
- const yes=$('yes'),no=$('no'),m=$('m');let size=18;m.textContent='Take your time.';
- const run=()=>{
-  tries++;yes.classList.add('run');
-  yes.style.left=(Math.random()*(innerWidth-yes.offsetWidth-20)+10)+'px';
-  yes.style.top=(Math.random()*(innerHeight-yes.offsetHeight-20)+10)+'px';
-  m.textContent=['Too slow.','Nope.','Almost!','The button does not like you.','Maybe that tells you something.'][Math.min(tries-1,4)];
-  size+=3;no.style.fontSize=size+'px';no.style.padding=(14+tries*2)+'px';
- };
- yes.addEventListener('pointerenter',run);
- yes.addEventListener('touchstart',e=>{e.preventDefault();run()},{passive:false});
- yes.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();run()}};
- no.onclick=()=>{yes.classList.remove('run');next()};
-}
-
-function result(){
- const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
- const qOk=log.filter(([l,ok])=>l.startsWith('Question')&&ok).length;
- const passed=l=>log.some(([x,ok])=>x===l&&ok);
- const avg=qTimes.length?qTimes.reduce((a,b)=>a+b,0)/qTimes.length:null;
- const parts=[
-  ['Base score',60],
-  [`Questions (${qOk}/${qs.length})`,qOk/qs.length*40],
-  [rms?`Reaction (${rms} ms)`:'Reaction',rms?clamp((900-rms)/600*10,0,10):0],
-  ['Memory',passed('Memory')?10:0],
-  ['Self-control',passed('Self-control')?5:0],
-  [avg?`Answer speed (${(avg/1000).toFixed(1)} s avg)`:'Answer speed',avg?clamp((15000-avg)/15000*10,0,10):0],
-  [`Chased "Yes" ${tries}x`,-Math.min(tries,5)*2]
- ];
- const target=Math.round(clamp(parts.reduce((a,p)=>a+p[1],0),40,160));
- const title=target<70?'Wet Cardboard':target<85?'Honorary Traffic Cone':target<100?'Professional Sock':target<115?'Suspiciously Decent Potato':'Possible Genius (Probably Cheated)';
- app.innerHTML=`<h1>Results for ${esc(name)}</h1><div class="big" id="iq">0</div><div class="cert"><p>Calculated IQ</p><p><b id="t">Calculating...</b></p></div><ul>${parts.map(([l,v])=>`<li>${l}: ${v>=0?'+':''}${v.toFixed(1)}</li>`).join('')}</ul><p>Average human IQ is 100.</p><button id="again">Test someone else</button>`;
- let n=0;const step=Math.max(1,Math.ceil(target/60));
- const iv=setInterval(()=>{n=Math.min(target,n+step);$('iq').textContent=n;if(n>=target){clearInterval(iv);$('t').textContent=`${name} is a ${title}`}},40);
- $('again').onclick=()=>{clearInterval(iv);i=0;stages[0]()};
-}
-
-const stages=[intro,...qs.map(question),reaction,memory,dont,dodge,result];
-stages[0]();
+intro();
 </script>
 </body>
 </html>
