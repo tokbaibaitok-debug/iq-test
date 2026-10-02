@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Official IQ Test</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap">
+<style>
+:root{--blue:#1d3bff;--pink:#ff3d81;--yellow:#ffe14d;--green:#18c964;--white:#fff;--ink:#101030;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:var(--blue);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;font-weight:600;display:grid;place-items:center;padding:16px}
+.card{background:var(--white);width:min(560px,100%);border:4px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 var(--ink);padding:28px;min-height:380px;display:flex;flex-direction:column;gap:16px}
+h1{font-family:'Bowlby One',Impact,sans-serif;font-weight:400;font-size:clamp(26px,6.5vw,40px);line-height:1.08;margin:0}
+p{margin:0;font-size:18px;line-height:1.4}
+input{font:inherit;font-size:20px;padding:12px 14px;border:3px solid var(--ink);border-radius:12px;width:100%}
+button{font:inherit;font-weight:800;font-size:18px;padding:14px 18px;border:3px solid var(--ink);border-radius:12px;background:var(--yellow);color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.opts{display:grid;gap:10px}
+.opts button{text-align:left;background:var(--white)}
+.opts button.bad{background:var(--pink);color:var(--white)}
+.bar{height:14px;border:3px solid var(--ink);border-radius:99px;overflow:hidden;flex:none}
+.bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
+.msg{min-height:26px;font-weight:800;color:var(--pink)}
+.row{display:flex;gap:12px;align-items:center;min-height:70px;flex-wrap:wrap}
+#yes.run{position:fixed;z-index:9}
+.big{font-family:'Bowlby One',Impact,sans-serif;font-size:clamp(64px,22vw,120px);line-height:1;color:var(--pink);-webkit-text-stroke:3px var(--ink)}
+.cert{border:4px dashed var(--ink);border-radius:14px;padding:16px;text-align:center}
+.box{height:140px;font-size:24px;background:var(--pink);color:var(--white)}
+.box.go{background:var(--green)}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pad{height:90px;opacity:.45}
+.pad.lit{opacity:1;transform:scale(.94)}
+ul{margin:0;padding-left:20px;line-height:1.6;font-size:16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card" id="app"></main>
+<script>
+const app=document.getElementById('app');
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let name='',pts=0,i=0,tries=0,log=[],timers=[],qTimes=[],rms=null;
+const later=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t);return t};
+const clear=()=>{timers.forEach(clearTimeout);timers=[]};
+const record=(l,ok)=>{if(ok)pts++;log.push([l,ok])};
+const next=()=>{clear();i++;stages[i]()};
+const shell=h=>{app.innerHTML=`<div class="bar"><i style="width:${i/(stages.length-1)*100}%"></i></div>${h}<div class="msg" id="m"></div>`};
+const $=id=>document.getElementById(id);
+
+const qs=[
+ {q:'What is 2 + 2 × 2?',o:['8','6','Both feel wrong'],a:1,w:'Multiplication goes first. Ask a calculator for help.'},
+ {q:'How many months have 28 days?',o:['1','12','Only February'],a:1,w:'Every month has at least 28 days.'},
+ {q:'What do you put in a toaster?',o:['Bread','A phone','Soup'],a:0,w:'It was bread. It is always bread.'},
+ {q:'A rooster lays an egg on a roof. Which way does it roll?',o:['Left','Right','Roosters do not lay eggs'],a:2,w:'Roosters. Do not. Lay eggs.'},
+ {q:'Which is heavier: 1 kg of feathers or 1 kg of steel?',o:['Steel','Feathers','They weigh the same'],a:2,w:'It says 1 kg both times. Read again.'},
+ {q:'A doctor gives you 3 pills: take one every 30 minutes. How long do they last?',o:['1 hour','1.5 hours','3 hours'],a:0,w:'You take one now, one at 30 min, one at 60 min.'},
+ {q:'How many letters are in the word "banana"?',o:['5','6','7'],a:1,w:'B-A-N-A-N-A. Count on your fingers if you must.'},
+ {q:'Which one is NOT a real day of the week?',o:['Tuesday','Thursday','Fryday'],a:2,w:'Fryday is not a day. It is a bad pun.'}
+];
+
+function intro(){
+ shell(`<h1>Official IQ Test</h1><p>Find out how smart you really are. ${qs.length+4} tests. Results are final and legally binding.</p><input id="n" placeholder="Type your name" maxlength="20" autocomplete="off"><button id="go">Start the test</button>`);
+ const go=()=>{const v=$('n').value.trim();if(!v){$('m').textContent='A name is required. Even you have one.';return}name=v;pts=0;tries=0;log=[];qTimes=[];rms=null;next()};
+ $('go').onclick=go;$('n').onkeydown=e=>{if(e.key==='Enter')go()};
+}
+
+const question=(q,n)=>()=>{
+ const t0q=performance.now();
+ shell(`<p>Question ${n+1} of ${qs.length}</p><h1>${q.q}</h1><div class="opts">${q.o.map((t,k)=>`<button data-k="${k}">${t}</button>`).join('')}</div>`);
+ let done=false;
+ app.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+  if(done)return;done=true;
+  if(+b.dataset.k===q.a){qTimes.push(performance.now()-t0q);record('Question '+(n+1),true);next()}
+  else{b.classList.add('bad');$('m').textContent=q.w;record('Question '+(n+1),false);later(next,1900)}
+ });
+};
+
+function reaction(){
+ shell(`<h1>Reaction test</h1><p>Click the box when it turns green.</p><button id="box" class="box">Wait...</button>`);
+ const box=$('box'),m=$('m');let ready=false,t0=0,done=false;
+ later(()=>{ready=true;t0=performance.now();box.classList.add('go');box.textContent='CLICK!'},1500+Math.random()*2500);
+ box.onclick=()=>{
+  if(done)return;done=true;clear();
+  if(!ready){m.textContent='Too early. Patience is not your thing.';record('Reaction',false)}
+  else{const ms=Math.round(performance.now()-t0),ok=ms<600;rms=ms;m.textContent=ms+' ms. '+(ok?'Fast enough.':'A sleeping cat is faster.');record('Reaction',ok)}
+  later(next,1800);
+ };
+}
+
+function memory(){
+ const cols=['#ff3d81','#ffe14d','#1d3bff','#18c964'];
+ const seq=Array.from({length:4},()=>Math.floor(Math.random()*4));
+ shell(`<h1>Memory test</h1><p id="p">Watch the colors.</p><div class="pads">${cols.map((c,k)=>`<button class="pad" data-k="${k}" style="background:${c}" aria-label="Pad ${k+1}"></button>`).join('')}</div>`);
+ const pads=[...app.querySelectorAll('.pad')],m=$('m'),p=$('p');let input=[],on=false;
+ seq.forEach((k,n)=>{later(()=>pads[k].classList.add('lit'),800+n*800);later(()=>pads[k].classList.remove('lit'),1300+n*800)});
+ later(()=>{on=true;p.textContent='Now repeat it.'},800+seq.length*800);
+ pads.forEach((b,k)=>b.onclick=()=>{
+  if(!on)return;input.push(k);
+  if(k!==seq[input.length-1]){on=false;m.textContent='Wrong. Your memory called in sick.';record('Memory',false);later(next,1800)}
+  else if(input.length===seq.length){on=false;m.textContent='Correct. Suspicious.';record('Memory',true);later(next,1300)}
+ });
+}
+
+function dont(){
+ shell(`<h1>Self-control test</h1><p>Do not click the button. Not for five seconds. That is the whole test.</p><button id="b">Do NOT click</button>`);
+ const m=$('m');let s=5,done=false;m.textContent='Time left: 5';
+ const tick=()=>{if(done)return;s--;
+  if(s<=0){done=true;m.textContent='You did nothing. Perfect.';record('Self-control',true);later(next,1500)}
+  else{m.textContent='Time left: '+s;later(tick,1000)}};
+ later(tick,1000);
+ $('b').onclick=()=>{if(done)return;done=true;clear();m.textContent='You clicked it. It said do not.';record('Self-control',false);later(next,1800)};
+}
+
+function dodge(){
+ shell(`<h1>Last question, ${esc(name)}.</h1><p>Are you smart?</p><div class="row"><button id="yes">Yes</button><button id="no">No</button></div>`);
+ const yes=$('yes'),no=$('no'),m=$('m');let size=18;m.textContent='Take your time.';
+ const run=()=>{
+  tries++;yes.classList.add('run');
+  yes.style.left=(Math.random()*(innerWidth-yes.offsetWidth-20)+10)+'px';
+  yes.style.top=(Math.random()*(innerHeight-yes.offsetHeight-20)+10)+'px';
+  m.textContent=['Too slow.','Nope.','Almost!','The button does not like you.','Maybe that tells you something.'][Math.min(tries-1,4)];
+  size+=3;no.style.fontSize=size+'px';no.style.padding=(14+tries*2)+'px';
+ };
+ yes.addEventListener('pointerenter',run);
+ yes.addEventListener('touchstart',e=>{e.preventDefault();run()},{passive:false});
+ yes.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();run()}};
+ no.onclick=()=>{yes.classList.remove('run');next()};
+}
+
+function result(){
+ const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+ const qOk=log.filter(([l,ok])=>l.startsWith('Question')&&ok).length;
+ const passed=l=>log.some(([x,ok])=>x===l&&ok);
+ const avg=qTimes.length?qTimes.reduce((a,b)=>a+b,0)/qTimes.length:null;
+ const parts=[
+  ['Base score',60],
+  [`Questions (${qOk}/${qs.length})`,qOk/qs.length*40],
+  [rms?`Reaction (${rms} ms)`:'Reaction',rms?clamp((900-rms)/600*10,0,10):0],
+  ['Memory',passed('Memory')?10:0],
+  ['Self-control',passed('Self-control')?5:0],
+  [avg?`Answer speed (${(avg/1000).toFixed(1)} s avg)`:'Answer speed',avg?clamp((15000-avg)/15000*10,0,10):0],
+  [`Chased "Yes" ${tries}x`,-Math.min(tries,5)*2]
+ ];
+ const target=Math.round(clamp(parts.reduce((a,p)=>a+p[1],0),40,160));
+ const title=target<70?'Wet Cardboard':target<85?'Honorary Traffic Cone':target<100?'Professional Sock':target<115?'Suspiciously Decent Potato':'Possible Genius (Probably Cheated)';
+ app.innerHTML=`<h1>Results for ${esc(name)}</h1><div class="big" id="iq">0</div><div class="cert"><p>Calculated IQ</p><p><b id="t">Calculating...</b></p></div><ul>${parts.map(([l,v])=>`<li>${l}: ${v>=0?'+':''}${v.toFixed(1)}</li>`).join('')}</ul><p>Average human IQ is 100.</p><button id="again">Test someone else</button>`;
+ let n=0;const step=Math.max(1,Math.ceil(target/60));
+ const iv=setInterval(()=>{n=Math.min(target,n+step);$('iq').textContent=n;if(n>=target){clearInterval(iv);$('t').textContent=`${name} is a ${title}`}},40);
+ $('again').onclick=()=>{clearInterval(iv);i=0;stages[0]()};
+}
+
+const stages=[intro,...qs.map(question),reaction,memory,dont,dodge,result];
+stages[0]();
+</script>
+</body>
+</html>
